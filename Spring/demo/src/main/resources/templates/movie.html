@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MOVIE WORLD</title>
+<style>
+body{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	text-align: center;
+	background: black;
+	color: white;
+}
+h2{
+	margin-top: 100px;
+	font-size: 50px;
+}
+#movie-row{
+	display: inline-flex;
+	justify-content: space-between;
+	font-size: 25px;
+}
+img{
+	width: 400px;
+	height: 500px;
+}
+
+</style>
+</head>
+<body>
+	<h2>MOVIE WORLD</h2>
+	<div id="movie-row">
+		<div id="div-row">
+			<img src="images/just.jpg">
+			<div id="data0"></div>
+		</div>
+		<div id="div-row">
+			<img src="images/romantic.jpg">
+		    <div id="data1"></div>
+		   </div>
+		<div id="div-row">
+		   <img src="images/diary.jpg">
+		   <div id="data2"></div>
+	    </div>
+    </div>
+</body>
+<script
+    src="https://code.jquery.com/jquery-3.6.1.js"
+    integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+    crossorigin="anonymous"
+  ></script>
+  <script type="text/javascript">
+     
+     function callMyAPI(){
+        //ajax : 백엔드와 프론트가 통신하는 기능!
+        //type : GET == Controller에 GetMapping
+        $.ajax({
+           url:'/api/v1/movies',
+           type:'GET',
+           dataType : 'json',
+           success : function (response){
+              console.log(response);
+              for(var i in response){
+              	$('#data'+i).append(response[i].title +"<br>");
+              	$('#data'+i).append(response[i].year +"<br>");
+              	$('#data'+i).append(response[i].runtime +"<br>");
+              	$('#data'+i).append(response[i].genre +"<br>");
+              }
+           }
+        });
+        
+     }
+     callMyAPI();// 함수호출
+  
+  </script>
+</html>

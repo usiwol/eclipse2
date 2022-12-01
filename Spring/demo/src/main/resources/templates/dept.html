@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>DEPT</title>
+</head>
+<style>
+body{
+	margin: 0;
+	padding: 0;
+}
+h2{
+	margin-top: 100px;
+	margin-bottom: 30px;
+	text-align: center;
+}
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 1200px;
+  margin: 0 auto;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  padding: 8px;
+  text-align: center;
+}
+
+tr:nth-child(even) {
+  background-color: hotpink;
+}
+
+</style>
+<body>
+	<h2>🌈 DEPT TABLE 🌈</h2>
+	<table id="dept">
+      <tr>
+        <td id="deptno">부서번호</td>
+        <td id="dname">부서이름</td>
+        <td id="loc">부서위치</td>
+      </tr>
+    </table>	
+</body>
+   <script src="https://code.jquery.com/jquery-3.6.1.js"
+    integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+    crossorigin="anonymous"></script>
+<script type="text/javascript">
+
+ 	callApi();
+	function callApi(){
+		$.ajax({
+	           url:'/api/v1/dept',
+	           type:'GET',
+	           dataType : 'json',
+	           success : function (response){
+	        	   /*
+	        	   var html = '';
+	        	   
+	        	   for(var i in response){
+	        		   html += '<tr><td>' + response[i].deptno+'</td><td>'
+	        		   + response[i].dname+'</td><td>'+response[i].loc+'</td></tr>'
+	        		   
+	        		   */
+	        	for(var i in response){
+	        		  var html = '<tr><td>' + response[i].deptno+'</td><td>'
+	        		   + response[i].dname+'</td><td>'+response[i].loc+'</td></tr>'
+	        		   
+	        		   $("#dept").append(html);
+	        		}	        		
+	       		}
+	        	   // $("#dept").append(html);
+	          	//}
+	      });
+	}
+	
+
+/* 
+     function callMyAPI(){
+        //ajax : 백엔드와 프론트가 통신하는 기능!
+        //type : GET == Controller에 GetMapping
+        $.ajax({
+           url:'/api/v1/dept',
+           type:'GET',
+           dataType : 'json',
+           success : function (data){
+              if(data.length>0)
+              	for(var i in data){
+              		tr = $('<tr></tr>');
+              		 
+              		empno = $('<td>'+data[i].empno+'</td>');
+              		ename = $('<td>'+data[i].ename+'</td>');
+              		job = $('<td>'+data[i].job+'</td>');
+              		sal = $('<td>'+data[i].sal+'</td>');
+              		hiredate = $('<td>'+data[i].hiredate+'</td>');
+              		
+              		tr.append(empno);
+              		tr.append(ename);
+              		tr.append(job);
+              		tr.append(sal);
+              		tr.append(hiredate);
+              		
+              		$("#emp").append(tr);
+              }
+           }
+        });   
+     }
+     callMyAPI();// 함수호출
+  	*/     
+ 
+ 
+
+
+
+     </script>
+
+</html>
