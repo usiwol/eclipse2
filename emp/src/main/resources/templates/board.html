@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>디엔비코드 게시판</title>
+<style>
+body{
+	margin: 0;
+	padding: 0;
+	margin-top: 70px;
+	background-color: #ffd700;
+}
+#container{
+	margin: 0 auto;
+	width: 1200px;
+}
+button{
+	width: 170px;
+	height: 60px;
+	font-size: 22px;
+	font-weight: 700;
+	border: 1px solic black;
+	border-radius: 7px;
+}
+button:hover{
+	cursor: pointer;
+}
+table {
+	margin: 0 auto; 
+	width : 1200px;
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 1200px;
+	margin-top: 50px;
+}
+h1{
+	text-align: center;
+	font-size: 50px;
+}
+.button{
+	text-align: right;
+}
+td, th {
+	border: 1px solid black;
+	text-align: left;
+	padding: 8px;
+	text-align: center;
+	height: 28px;
+	font-size: 20px;
+}
+th{
+ 	background-color:#ffe4b5
+}
+tr:nth-child(even) {
+	background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+	<div id="container">
+		<h1> 🌈 디엔비코드 게시판 🌈 </h1>
+		<div class="button">
+			<button type="button">게시물 작성
+		</div>
+		<div id="table_wrap">
+			<table id="board">
+				<th>게시판 번호</th>
+				<th>게시판 제목</th>
+				<th>작성자</th>
+				<th>작성날짜</th>
+				<th>조회수</th>
+			</table>
+		</div>
+	</div>
+</body>
+   <script src="https://code.jquery.com/jquery-3.6.1.js"
+    integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+    crossorigin="anonymous"></script>
+<script type="text/javascript">
+	//사원목록 불러오기
+	callApi();
+	function callApi(){
+			$.ajax({
+		           url:'/api/v1/board',
+		           type:'GET',
+		           dataType : 'json',
+		           success : function (response){
+		        	   var html = '';
+		        	   for(var i=0; i <response.length; i++){
+		        		   html += '<tr><td>' + response[i].board_no+'</td><td><a href="#">'
+		        		   + response[i].title+'</a></td><td>'+response[i].writer
+		        		   +'</td><td>'+response[i].create_at+'</td><td>'
+		        		   + response[i].board_count+'</td></tr>'
+		        	   }
+		        	   $("#board").append(html);
+		          	}
+		      });
+	}
+	
+
+
+</script>
+</html>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dw.emp.service.EmpService;
+import com.dw.emp.vo.BoardVO;
 import com.dw.emp.vo.EmpVO;
 
 @RestController
@@ -48,4 +49,6 @@ public class EmpApiController {
 	public int callEmpDelete(@PathVariable int empno) {
 		return empMapper.deleteEmp(empno);
 	}
+	
+
 }

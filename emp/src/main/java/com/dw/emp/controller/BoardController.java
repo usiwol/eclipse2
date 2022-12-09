@@ -4,11 +4,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class EmpController {
-
-	@GetMapping("/emp")
+public class BoardController {
+	
+	@GetMapping("/board")
 	public String loadPage() {
-		return "emp";
+		return "board";
 	}
-
+	
+	@GetMapping("/write")
+	public String loadWritePage() {
+		return "write";
+	}
 }

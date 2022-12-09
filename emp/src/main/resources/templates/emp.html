@@ -8,114 +8,152 @@
 body{
 	margin: 0;
 	padding: 0;
-	margin-top: 100px;
+	margin-top: 70px;
+	background-color: black;
+	color: white;
+}
+h1{
+	margin: 0 auto;
+	text-align: center;
+	margin-bottom: 40px;
+	font-size: 50px;
 }
 h3{
-	margin-top: 70px;
-	margin-bottom: 15px;
+	margin-top: 5px;
+	margin-bottom: 10px;
 	text-align: center;
 }
-#input_wrap{
+#container{
 	margin: 0 auto;
 	padding: 0;
-	width: 1200px;
-	height: 50px;
+	width: 1500px;
+	height: 850px;
 	text-align: center;
+	display: flex;
 }
-.input{
-	width: 210px;
-	height: 28px;
-	border: 1px solid black;
-	border-radius: 5px;
-	padding-left: 10px;
-	font-size: 15px;
+#input_wrap{
+	margin: 0;
+  	padding: 0;
+	width: 320px;
+	height: 860px;
+  	margin-right: 50px;
+  	margin-bottom: 20px;
+ 	border-top: 0;
+  	display : table;
+  	border-collapse: collapse;
 }
-.input1{
-	width: 120px;
-	height: 28px;
-	border: 1px solid black;
-	border-radius: 5px;
-	padding-left: 10px;
-	font-size: 11px;
-}
-button{
-	width: 220px;
-	height: 30px;
-	background: hotpink;
-	border: 0;
-	border-radius: 5px;
-	font-size: 16px;
-}
-.button1{
-	width: 130px;
-	height: 38px;
-	background: hotpink;
-	border: 0;
-	border-radius: 5px;
-	font-size: 16px;
-}
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 1200px;
-  margin: 0 auto;
-}
-td, th {
-  border: 1px solid #dddddd;
-  padding: 8px;
-  text-align: center;
+#input_wrap div{
+  border : solid 1px white;
 }
 
-tr:nth-child(even) {
-  background-color: hotpink;
+#list-wrap{
+  	width:1200px; 
+ 	height: 500px;
 }
+.input{
+	width: 230px;
+	height: 25px;
+	border: 1px solid black;
+	border-radius: 5px;
+	padding-left: 10px;
+	margin-bottom: 10px;
+	font-size: 15px;
+	text-align: center;
+}
+input:focus {
+	outline: none;
+}
+
+button{
+	width: 140px;
+	height: 30px;
+	background: white;
+	border: 0;
+	border-radius: 5px;
+	font-size: 16px;
+	margin-bottom: 15px;
+}
+button:hover{
+	cursor: pointer;
+}
+table {
+  margin:0 auto;
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 1100px;
+
+}
+td, th { 
+  padding: 8px;
+  text-align: center;
+  border-radius: 8px;  
+  height: 28px;
+}
+th{
+  background-color: grey;
+}
+tr{
+  background-color: #a9a9a9;
+}
+
 tr:hover{
   cursor: pointer;
 }
 
 </style>
 <body>
-	<div id="input_wrap">
-		<!-- 사원 추가 -->
-		<h3>사원 추가</h3>
-		<input class="input1" id="i_empno" type="text" placeholder="사원번호를 입력하세요."/>
-		<input class="input1" id="i_ename1" type="text" placeholder="사원이름을 입력하세요."/>
-		<input class="input1" id="i_job" type="text" placeholder="사원직책을 입력하세요."/>
-		<input class="input1" id="i_hiredate" type="text" placeholder="입사날짜를 입력하세요."/>	
-		<input class="input1" id="i_sal" type="text" placeholder="사원급여를 입력하세요."/>
-		<input class="input1" id="i_deptno" type="text" placeholder="부서번호를 입력하세요."/>
-		<button class="button1" type="button" onclick="join()">사원 추가</button>
-		<!-- 사원 수정 -->
-			<h3>사원 수정</h3>
-		<input id="u_empno" type="text" placeholder="사원번호를 입력해주세요..."/>
-		<input id="u_job" type="text" placeholder="사원직책을 입력하세요."/>
-		<input id="u_sal" type="text" placeholder="사원급여를 입력하세요."/>
-		<button type="button" onclick="doUpdate()">수정🎄🎄</button>
+<h1>디엔비 코드 사원 정보</h1>
+	<div id="container">
 		
-		<!-- 사원 삭제 -->
-		<h3>사원 삭제</h3>
-		<input id="d_empno" type="text" placeholder="사원번호를 입력해주세요....."/>
-		<button type="button" onclick="doDelete()">사원 삭 to the 제</button>
-		
-		<!-- 사원 상세 정보 -->
-		<h3>사원 정보</h3>
-		<input class="input" id="ename" type="text" disablde="disablde" placeholder="사원 이름">
-		<input class="input" id="comm" type="text" disablde="disablde" placeholder="사원 보너스">
-		<input class="input" id="sal" type="text" disablde="disablde" placeholder="사원 급여">
-		
-		<!-- 사원목록 구현하기 -->
-		<h3>사원 목록</h3>
-		<table id="emp">
-			<tr>
-				<td>사원번호</td>
-				<td>사원이름</td>
-				<td>직책</td>
-				<td>입사날짜</td>
-				<td>급여</td>
-				<td>부서이름</td>
-				<td>부서위치</td>
-			</tr>
-		</table>
+		<div id="input_wrap">
+			<div class="side1">
+				<!-- 사원 상세 정보 -->
+				<h3>사원 정보 조회</h3>
+				<input class="input" id="ename" type="text" disablde="disablde" placeholder="사원 이름">
+				<input class="input" id="comm" type="text" disablde="disablde" placeholder="사원 보너스">
+				<input class="input" id="sal" type="text" disablde="disablde" placeholder="사원 급여">
+			</div>
+			<div class="side2">
+				<!-- 사원 추가 -->
+				<h3>사원 추가</h3>
+				<input class="input" id="i_empno" type="text" placeholder="사원번호를 입력하세요."/>
+				<input class="input" id="i_ename1" type="text" placeholder="사원이름을 입력하세요."/>
+				<input class="input" id="i_job" type="text" placeholder="사원직책을 입력하세요."/>
+				<input class="input" id="i_hiredate" type="text" placeholder="입사날짜를 입력하세요."/>	
+				<input class="input" id="i_sal" type="text" placeholder="사원급여를 입력하세요."/>
+				<input class="input" id="i_deptno" type="text" placeholder="부서번호를 입력하세요."/>
+				<button class="button" type="button" onclick="join()">사원 추가</button>
+			</div>
+			<div class="side3">
+				<!-- 사원 정보 수정 -->
+				<h3>사원 정보 수정</h3>
+				<input class="input" id="u_empno" type="text" placeholder="사원번호를 입력해주세요..."/>
+				<input class="input" id="u_job" type="text" placeholder="사원직책을 입력하세요."/>
+				<input class="input" id="u_sal" type="text" placeholder="사원급여를 입력하세요."/>
+				<button type="button" onclick="doUpdate()">사원 수정</button>
+			</div>
+			<div class="side4">
+				<!-- 사원 삭제 -->
+				<h3>사원 삭제</h3>
+				<input class="input" id="d_empno" type="text" placeholder="사원번호를 입력해주세요....."/>
+				<button type="button" onclick="doDelete()">사원 삭제</button>
+			</div>
+		</div>
+		<div id="list_wrap">
+			<!-- 사원목록 구현하기 -->
+			<!-- <h2>사원 목록</h3> -->
+			<table id="emp">
+				<tr>
+					<th>사원번호</th>
+					<th>사원이름</th>
+					<th>직책</td>
+					<th>입사날짜</th>
+					<th>급여</th>
+					<th>부서이름</th>
+					<th>부서위치</th>
+				</tr>
+			</table>
+		</div>
 	</div>
 </body>
    <script src="https://code.jquery.com/jquery-3.6.1.js"

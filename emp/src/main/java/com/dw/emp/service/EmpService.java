@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dw.emp.mapper.BoardMapper;
 import com.dw.emp.mapper.EmpMapper;
+import com.dw.emp.vo.BoardVO;
 import com.dw.emp.vo.EmpVO;
 
 @Service
@@ -13,6 +15,9 @@ public class EmpService {
 
 	@Autowired
 	EmpMapper empMapper;
+	
+	@Autowired
+	BoardMapper boardMapper;
 	
 	public List<EmpVO> selectEmp(){
 		return empMapper.selectEmp();
@@ -32,6 +37,10 @@ public class EmpService {
 	
 	public int deleteEmp(int empno) {
 		return empMapper.deleteEmp(empno);
+	}
+
+	public List<BoardVO> selectBoard() {
+		return boardMapper.selectBoard();
 	}
 	
 	
