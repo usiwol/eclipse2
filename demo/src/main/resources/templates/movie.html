@@ -1,77 +1,88 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>MOVIE WORLD</title>
-<style>
-body{
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	text-align: center;
-	background: black;
-	color: white;
-}
-h2{
-	margin-top: 100px;
-	font-size: 50px;
-}
-#movie-row{
-	display: inline-flex;
-	justify-content: space-between;
-	font-size: 25px;
-}
-img{
-	width: 400px;
-	height: 500px;
-}
-
-</style>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>해외영화 사이트</title>
+<!-- 구글 무료 폰트 -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap"
+	rel="stylesheet" />
+<!-- 아이콘 -->
+<link rel="stylesheet"
+	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+	integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+	crossorigin="anonymous" />
+<link rel="stylesheet" href="/css/movie.css" />
+<title>Insert title here</title>
 </head>
 <body>
-	<h2>MOVIE WORLD</h2>
-	<div id="movie-row">
-		<div id="div-row">
-			<img src="images/just.jpg">
-			<div id="data0"></div>
-		</div>
-		<div id="div-row">
-			<img src="images/romantic.jpg">
-		    <div id="data1"></div>
-		   </div>
-		<div id="div-row">
-		   <img src="images/diary.jpg">
-		   <div id="data2"></div>
-	    </div>
+	 <!-- 영화 리스트 -->
+    <div class="container">
+      <div class="site-title">
+        <h2>상원 NETFLIX</h2>
+      </div>
+      <div class="movie-row">
+        <div class="item" data-tilt>
+          <div id="movie-0" class="poster"></div>
+          <h4 id="movie-title-0" class="title"></h4>
+          <p id="movie-year-0" class="year"></p>
+        </div>
+        <div class="item" data-tilt>
+          <div id="movie-1" class="poster"></div>
+          <h4 id="movie-title-1" class="title"></h4>
+          <p id="movie-year-1" class="year"></p>
+        </div>
+        <div class="item" data-tilt>
+          <div id="movie-2" class="poster"></div>
+          <h4 id="movie-title-2" class="title"></h4>
+          <p id="movie-year-2" class="year"></p>
+        </div>
+        <div class="item" data-tilt>
+          <div id="movie-3" class="poster"></div>
+          <h4 id="movie-title-3" class="title"></h4>
+          <p id="movie-year-3" class="year"></p>
+        </div>
+        <div class="item" data-tilt>
+          <div id="movie-4" class="poster"></div>
+          <h4 id="movie-title-4" class="title"></h4>
+          <p id="movie-year-4" class="year"></p>
+        </div>
+      </div>
     </div>
 </body>
-<script
-    src="https://code.jquery.com/jquery-3.6.1.js"
-    integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
-    crossorigin="anonymous"
-  ></script>
-  <script type="text/javascript">
-     
-     function callMyAPI(){
-        //ajax : 백엔드와 프론트가 통신하는 기능!
-        //type : GET == Controller에 GetMapping
-        $.ajax({
-           url:'/api/v1/movies',
-           type:'GET',
-           dataType : 'json',
-           success : function (response){
-              console.log(response);
-              for(var i in response){
-              	$('#data'+i).append(response[i].title +"<br>");
-              	$('#data'+i).append(response[i].year +"<br>");
-              	$('#data'+i).append(response[i].runtime +"<br>");
-              	$('#data'+i).append(response[i].genre +"<br>");
-              }
-           }
-        });
-        
-     }
-     callMyAPI();// 함수호출
-  
-  </script>
+<script src="/js/vanilla-tilt.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.1.js"
+	integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+	crossorigin="anonymous"></script>
+	
+<script type="text/javascript">
+	callMyAPI();//함수 호출
+	
+	function callMyAPI(){
+		//ajax : 백엔드와 프론트가 통신하는 기능!
+		//type : GET == Controller에 GetMapping.
+		//dataType : return 데이터를 json으로 받음.
+		$.ajax({
+			url: '/api/v1/movies',
+			type: 'GET',
+	        dataType: 'json',
+	        success: function (response) {
+	        	console.log(response);
+	        	for (var i = 0; i < response.length; i++) {
+	                //영화 포스터 5개만 가져오기
+	                var posterUrl = 'https://m.media-amazon.com/images/M/MV5BMTQ2MzQ0NTk4N15BMl5BanBnXkFtZTcwMDc2NDYzNQ@@._V1_SX300.jpg';
+	                //img 태그 생성 포스터 이미지 경로 src에 넣어주기
+	                var html = '<img src="' + posterUrl + '">';
+	                //id가 movie-0 ~ movie-4 인 태그에 영화 포스터사진 append 하기!
+	                $('#movie-' + i).append(html);
+	                $('#movie-title-' + i).append(response[i].title);
+	                $('#movie-year-' + i).append(response[i].year);
+	              }
+	        }
+		});		
+	}
+</script>
 </html>

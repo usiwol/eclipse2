@@ -77,7 +77,7 @@
                             <div class="circle"></div>업체 주소
                         </div>
                         <input type="text" style="width:570px; margin-bottom:20px;" id="addr" autocomplete="off" />
-                        <button style="cursor: pointer; background-color:#fff; border:none;" onclick=" getPostCode()">우편번호 찾기</button>
+                        <button style="cursor: pointer; background-color:#fff; border:none;" onclick="getPostCode()">우편번호 찾기</button>
                         <input type="text" style="width:755px;" id="detailAddr" autocomplete="off" />
                     </div>
                     <!--//box-->
@@ -105,138 +105,114 @@
 </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.1.js"
-    integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
-    crossorigin="anonymous"></script>
-<!-- 라이브러리 -->
+integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+crossorigin="anonymous"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 
-// select box 이메일 클릭시 input에 자동으로 값 추가!
-$('#emailOption').change(function(){
+  //select box 이메일 클릭시 input에 자동으로 값 추가!
+  $('#emailOption').change(function(){
     let email = $('#emailOption option:selected').val();
     $('#secondEmail').val(email);
-})
+  })
 
-
-function doJoin() {
-    //가입자 명
-    let userName = $("#userName").val();
-    if(userName === "") {
-        alert("가입자 명을 입력해주세요.");
-        $("#userName").focus();
-        return false;
-    }
-
-    //연락처
-    let phone = $("#phone").val();
-    if(phone === "") {
-        alert("연락처를 정확하게 입력해 주세요.");
-        $("#phone").focus();
-        return false;
-    }
-
-    // 비밀번호 
-    let password_1 = $("#password_1").val();
-    if(password_1 === "") {
-        alert("비밀번호를 입력해 주세요.");
-        $("#password_1").focus();
-        return false;
-    }
-
-    // 비밀번호 확인
-    let password_2 = $("#password_2").val();
-    if(password_2 === "") {
-        alert("비밀번호 확인하여 주세요.");
-        $("#password_2").focus();
-        return false;
-    }
-    // 비밀번호 일치 확인
-    if (password_1 !== password_2) {
-          alert("비밀번호가 일치하지 않습니다.");
-          return false;
+  function doJoin(){
+        let userName = $('#userName').val();
+        if(userName === ''){
+            alert('이름을 입력해주세요.');
+            $('#userName').focus();
+            return false;
+        }
+        let phone = $('#phone').val();
+        if(phone === ''){
+            alert('연락처를 입력해주세요.');
+            $('#phone').focus();
+            return false;
+        }
+        let password_1 = $('#password_1').val();
+        if(password_1 === ''){
+            alert('비밀번호를 입력해주세요.');
+            $('#password_1').focus();
+            return false;
+        }
+        let password_2 = $('#password_2').val();
+        if(password_2 === ''){
+            alert('비밀번호를 입력해주세요.');
+            $('#password_2').focus();
+            return false;
+        }
+        let firstEmail = $('#firstEmail').val();
+        if(firstEmail === ''){
+            alert('이메일을 입력해주세요.');
+            $('#firstEmail').focus();
+            return false;
         }
 
-    // 이메일
-    let firstEmail = $("#firstEmail").val();
-    if(firstEmail === "") {
-        alert("이메일을 정확하게 입력해 주세요.");
-        $("#firstEmail").focus();
-        return false;
-    }
-    let secondEmail = $("#secondEmail").val();
-    if(secondEmail === "") {
-        alert("이메일을 정확하게 입력해 주세요.");
-        $("#secondEmail").focus();
-        return false;
-    }
+        let secondEmail = $('#secondEmail').val();
+        if(secondEmail === ''){
+            alert('이메일을 입력해주세요.');
+            $('#secondEmail').focus();
+            return false;
+        }
+        let companyName = $('#companyName').val();
+        if(companyName === ''){
+            alert('회사명 입력해주세요.');
+            $('#companyName').focus();
+            return false;
+        }
+        let addr = $('#addr').val();
+        if(addr === ''){
+            alert('회사주소를 입력해주세요.');
+            $('#addr').focus();
+            return false;
+        }
+        let companyPhone = $('#companyPhone').val();
+        if(companyPhone === ''){
+            alert('연락처를 입력해주세요.');
+            $('#companyPhone').focus();
+            return false;
+        }
+        let companyNumber = $('#companyNumber').val();
+        if(addr === ''){
+            alert('사업자번호를 입력하세요.');
+            $('#companyNumber').focus();
+            return false;
+        }
 
-    // 업체명
-    let companyName = $("#companyName").val();
-    if(companyName === "") {
-        alert("업체명을 정확하게 입력해 주세요.");
-        $("#companyName").focus();
-        return false;
-    }
+        alert('회원 가입 완료!');
 
-    // 업체주소
-    let addr = $("#addr").val();
-    if(addr === "") {
-        alert("업체주소를 정확하게 입력해 주세요.");
-        $("#addr").focus();
-        return false;
-    }
+        let jsonData = {
+            "userName" : userName,
+            "phone" : phone,
+            "password" : password_1,
+            "email" : firstEmail + '@' + secondEmail,
+            "companyName" : companyName,
+            "addr" : addr,
+            "companyPhone" : companyPhone,
+            "companyNumber" : companyNumber
+        };
+        doSubmit(jsonData);
 
-    // 업체연락처
-    let companyPhone = $("#companyPhone").val();
-    if(companyPhone === "") {
-        alert("업체 연락처를 정확하게 입력해 주세요.");
-        $("#companyPhone").focus();
-        return false;
-    }
-
-    // 업체 사업자 번호
-    let companyNumber = $("#companyNumber").val();
-    if(companyNumber === "") {
-        alert("업체 사업자 번호를 정확하게 입력해 주세요.");
-        $("#companyNumber").focus();
-        return false;
-    }
-
-    alert("회원가입 완료!");
-
-
-    let jsonData={
-        "userName" : userName,
-        "phone" : phone,
-        "password": password_1,
-        "email" : firstEmail+ '@' + secondEmail,
-        "companyName" : companyName,
-        "addr" : addr,
-        "companyPhone" : companyPhone,
-        "companyNumber" : companyNumber
-    };
-    doSubmit(jsonData);
-}
-
-// 백엔드(API 서버)에 데이터 전송
-function doSubmit(data){
+  }
+  
+  //백엔드(API 서버)에 데이터 전송
+  function doSubmit(data){
     console.log(data);
-  //AJAX 호출!
     $.ajax({
     	url: '/api/v1/join2',
-       	type: "POST",
-       	contentType: 'application/json', // 서버에 json 타입으로 보낼 예정(요청)
-       	data: JSON.stringify(data),
-       	dataType: 'json',
-       	success: function (response){
-       		console.log(response);
-       	}
-       });
-        
-}
+    	type: 'POST',
+    	contentType: 'application/json', //서버에 json 타입으로 보낼 예정(요청)
+    	data : JSON.stringify(data),
+    	dataType: 'json',
+	        success: function (response) {
+	        	console.log(response);
+	        }
+    });
+    
+  }
 
-// 도로명 함수
-function getPostCode(){
+  //도로명 주소 함수
+  function getPostCode(){
     	  new daum.Postcode({
               oncomplete: function(data) {
                   // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
@@ -260,8 +236,9 @@ function getPostCode(){
                   if(fullRoadAddr !== ''){
                       fullRoadAddr += extraRoadAddr;
                   }
-                  // 입력하기
+
                   $('#addr').val(fullRoadAddr);
+
               }
           }).open();
       }

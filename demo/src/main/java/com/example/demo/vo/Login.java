@@ -1,30 +1,30 @@
 package com.example.demo.vo;
 
-// VO 클래스 : VO는 Value Object 줄임말
-// VO클래스에는 필드변수와 getter, setter만 온다.
-public class Login {
-	private String uid;
-	private String pw;
-	private String email_id;
+//VO 클래스 : VO는 Value Object 줄임말
+//VO 클래스에는 필드변수와 getter, setter만 온다.
+public class Login{
+
+	private String userId;
+	private String userPassword;
+	private String userEmail;
 	
-	public String getUid() {
-		return uid;
+	public String getUserId() {
+		return userId;
 	}
-	public void setUid(String uid) {
-		this.uid = uid;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
-	public String getPw() {
-		return pw;
+	public String getUserPassword() {
+		return userPassword;
 	}
-	public void setPw(String pw) {
-		this.pw = pw;
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
 	}
-	public String getEmail_id() {
-		return email_id;
+	public String getUserEmail() {
+		return userEmail;
 	}
-	public void setEmail_id(String email_id) {
-		this.email_id = email_id;
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
-	
 	
 }

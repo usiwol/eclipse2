@@ -241,28 +241,27 @@
         }
         // 문제2. 아이디의 모든 대문자를 대응되는 소문자로 치환합니다. ex) HYUNSANGWON -> hyunsangwon
         console.log(userId.toLowerCase());
-
         alert('회원가입 완료 🎉🎊🎈');
-        
+		
         var jsonData = {
-            	"uid" : userId, 
-            	"pw" : userPassword, 
-            	"email_id" : userEmail	
-            };
-            
-         //AJAX 호출!
-         $.ajax({
-         	url: '/api/v1/join',
-            	type: "POST",
-            	contentType: 'application/json', // 서버에 json 타입으로 보낼 예정(요청)
-            	data: JSON.stringify(jsonData),
-            	dataType: 'json',
-            	success: function (response){
-            		console.log(response);
-            	}
-            });
+        	"userId" : userId,
+        	"userPassword" : userPassword,
+        	"userEmail" : userEmail
+        };
         
-
+        //AJAX 호출!
+        $.ajax({
+        	url: '/api/v1/join',
+        	type: 'POST',
+        	contentType: 'application/json', //서버에 json 타입으로 보낼 예정(요청)
+        	data : JSON.stringify(jsonData),
+        	dataType: 'json',
+ 	        success: function (response) {
+ 	        	console.log(response);
+ 	        }
+        });
+        
+        
       }
 
       let doClick = () => {

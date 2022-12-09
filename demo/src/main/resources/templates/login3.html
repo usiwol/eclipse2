@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+</head>
+<body>
+	<h3>DW 회원가입</h3>
+	<input id="userId" type="text" placeholder="아이디를 입력해주세요..." />
+	<button type="button" onclick="doCheck()">아이디 체크</button>
+	<input id="userName" type="text" placeholder="이름을 입력해주세요..." />
+	<input id="userPw" type="password" placeholder="비밀번호를 입력해주세요...." />
+	<button type="button" onclick="doJoin()">회원가입</button>
+
+	<h2>DW 로그인</h2>
+	<input id="i_userId" type="text" placeholder="아이디를 입력해주세요..." />
+	<input id="i_userName" type="password" placeholder="비밀번호를 입력해주세요..." />
+	<button type="button" onclick="doLogin()">로그인</button>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.6.1.js"
+	integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+	crossorigin="anonymous"></script>
+<script type="text/javascript">
+
+	var isCheck = false;
+
+	//아이디 중복 체크 : 이미 가입된 아이디 찾기!
+	function doCheck(){
+		
+		var id = $('#userId').val();
+		$.ajax({
+			url : '/api/v1/users/'+id,
+			type : 'GET',
+			dataType : 'json',
+			success : function(response) {
+				//true면 이미 가입한 아이디가 존재!
+				if(response){
+					alert('이미 가입된 아이디입니다!');
+					return false;
+				}else{
+					alert('사용가능한 아이디입니다!');
+					isCheck = true;
+					return false;
+				}
+			}
+		});
+	}
+	
+	function doLogin() {
+		var id = $('#i_userId').val();
+		var pw = $('#i_userName').val();
+		var jsonData = {
+			"id" : id,
+			"pw" : pw
+		};
+		$.ajax({
+			url : '/api/v1/login',
+			type : 'POST',
+			contentType : 'application/json', //서버에 json 타입으로 보낼 예정(요청)
+			data : JSON.stringify(jsonData),
+			dataType : 'json',
+			success : function(response) {
+				if(response.user){
+					//페이지 이동 로직구현 예정
+					alert(response.name + ' 환영합니다. 🎉🎊🎉🎊');
+					location.href = '/users';
+				}else{
+					alert('아이디 혹은 비밀번호가 틀렸습니다!');
+				}
+			}
+		});
+	}
+
+	function doJoin() {
+		//자바스크립트를 이용해섯 빈칸 체크하기
+		var id = $('#userId').val();
+		var name = $('#userName').val();
+		var pw = $('#userPw').val();
+
+		if (id === '') {
+			alert('아이디를 입력해주세요');
+			$('#userId').focus();
+			return false;
+		}
+		if (name === '') {
+			alert('이름을 입력해주세요');
+			$('#userName').focus();
+			return false;
+		}
+		if (pw === '') {
+			alert('비밀번호를 입력해주세요');
+			$('#userPw').focus();
+			return false;
+		}
+		//ajax
+
+		var jsonData = {
+			"id" : id,
+			"name" : name,
+			"pw" : pw
+		};
+
+		$.ajax({
+			url : '/api/v1/users',
+			type : 'POST',
+			contentType : 'application/json', //서버에 json 타입으로 보낼 예정(요청)
+			data : JSON.stringify(jsonData),
+			dataType : 'json',
+			success : function(response) {
+				alert('회원가입 완료 🎉🎉');
+				location.reload(); //새로고침
+			}
+		});
+
+	}
+</script>
+</html>

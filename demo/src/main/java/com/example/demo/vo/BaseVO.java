@@ -1,6 +1,7 @@
 package com.example.demo.vo;
 
 public class BaseVO {
+	
 	private int deptno;
 
 	public int getDeptno() {
@@ -10,5 +11,4 @@ public class BaseVO {
 	public void setDeptno(int deptno) {
 		this.deptno = deptno;
 	}
-	
 }

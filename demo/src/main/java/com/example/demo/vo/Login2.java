@@ -1,6 +1,7 @@
 package com.example.demo.vo;
 
 public class Login2 {
+
 	private String userName;
 	private String phone;
 	private String password;
@@ -58,5 +59,4 @@ public class Login2 {
 	public void setCompanyNumber(String companyNumber) {
 		this.companyNumber = companyNumber;
 	}
-	
 }

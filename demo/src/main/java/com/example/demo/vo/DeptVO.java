@@ -1,8 +1,9 @@
 package com.example.demo.vo;
 
-public class DeptVO extends BaseVO {
-	private String dname; //부서이름
-	private String loc; //부서위치
+public class DeptVO extends BaseVO{
+	
+	private String dname; //부서 이름
+	private String loc; //부서 위치
 	
 	public String getDname() {
 		return dname;

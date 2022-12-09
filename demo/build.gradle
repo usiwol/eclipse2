@@ -13,18 +13,20 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	//실시간으로 화면 수정
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	//롬복
 	annotationProcessor 'org.projectlombok:lombok'
 	compileOnly 'org.projectlombok:lombok'
-	//MYSQL
+	//MySQL
 	runtimeOnly 'mysql:mysql-connector-java'
-	// ORM(내가 작성한 SQL 결과를 JAVA로 변환)
+	//ORM (내가 작성한 SQL 결과를 JAVA로 변환) Mybatis or JPA
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
+	//Spring security
+	implementation "org.springframework.security:spring-security-web"
+	implementation "org.springframework.security:spring-security-config"
 }
 
 tasks.named('test') {

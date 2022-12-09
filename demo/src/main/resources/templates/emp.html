@@ -2,83 +2,82 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>EMP</title>
-</head>
+<title>Insert title here</title>
 <style>
-body{
-	margin: 0;
-	padding: 0;
-}
-h2{
-	margin-top: 100px;
-	margin-bottom: 30px;
-	text-align: center;
-}
-#input_wrap{
-	margin: 0 auto;
-	padding: 0;
-	width: 1200px;
-	height: 50px;
-	text-align: center;
-}
-.input{
-	width: 210px;
-	height: 25px;
-	border: 1px solid black;
-	border-radius: 5px;
-	padding-left: 10px;
-	font-size: 15px;
-}
-button{
-	width: 220px;
-	height: 30px;
-	background: hotpink;
-	border: 0;
-	border-radius: 5px;
-	font-size: 16px;
-}
 table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 1200px;
-  margin: 0 auto;
+	margin: 50px auto; width : 1000px;
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+	width: 1200px;
 }
+
 td, th {
-  border: 1px solid #dddddd;
-  padding: 8px;
-  text-align: center;
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
 }
 
 tr:nth-child(even) {
-  background-color: hotpink;
+	background-color: #dddddd;
 }
-
 </style>
+</head>
 <body>
-	<h2>🌈 EMP TABLE 🌈</h2>
-	<div id="input_wrap">
-		<input class="input" id="empno" type="text" placeholder="사원번호를 입력하세요."/>
-		<input class="input" id="ename" type="text" placeholder="사원이름을 입력하세요."/>
-		<input class="input" id="job" type="text" placeholder="사원직책을 입력하세요."/>	
-		<input class="input" id="sal" type="text" placeholder="사원급여를 입력하세요."/>
-		<button type="button" onclick="join()">사원 추가</button>
-	</div>
-	<table id="emp">
-      <tr>
-        <td>사원번호</td>
-        <td>사원이름</td>
-        <td>직업</td>
-        <td>급여</td>
-        <td>입사날짜</td>
-      </tr>
-    </table>	
+	<h2>안녕하세요 여기는 EMP 화면 입니다.</h2>
+	
+	<input id="empno" type="text" placeholder="사원번호를 입력하세요."/>
+	<input id="ename" type="text" placeholder="사원이름을 입력하세요."/>
+	<input id="job" type="text" placeholder="사원직책을 입력하세요."/>
+	<input id="sal" type="text" placeholder="사원급여를 입력하세요."/>
+	<button type="button" onclick="join()">사원 추가</button>
+	
+	<h3>사원 삭제</h3>
+	<input id="d_empno" type="text" placeholder="사원번호를 입력해주세요....."/>
+	<button type="button" onclick="doDelete()">사원 삭 to the 제</button>
+	
+	<h3>사원 수정</h3>
+	<input id="u_empno" type="text" placeholder="사원번호를 입력해주세요..."/>
+	<input id="u_job" type="text" placeholder="사원직책을 입력하세요."/>
+	<input id="u_sal" type="text" placeholder="사원급여를 입력하세요."/>
+	<button type="button" onclick="doUpdate()">수정🎄🎄</button>
+	
+	<table>
+		<tr>
+			<th>사원번호</th>
+			<th>사원이름</th>
+			<th>직업</th>
+			<th>급여</th>
+			<th>입사날짜</th>
+		</tr>
+		<tbody id="data">
+		</tbody>
+	</table>
 </body>
-   <script src="https://code.jquery.com/jquery-3.6.1.js"
-    integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
-    crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.1.js"
+	integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+	crossorigin="anonymous"></script>
 <script type="text/javascript">
-
-
+	callApi();
+	function callApi() {
+		$.ajax({
+			url : '/api/v1/emp',
+			type : 'GET',
+			dataType : 'json',
+			success : function(response) {
+				var html = '';
+				for (var i = 0; i < response.length; i++) {
+					html += '<tr><td>' + response[i].empno + '</td><td>'
+							+ response[i].ename + '</td><td>' + response[i].job
+							+ '</td><td>' + response[i].sal + '</td><td>'
+							+ response[i].hiredate + '</td></tr>';
+				}
+				$('#data').append(html);
+			}
+		});
+	}
+	
+	
 	function join(){
 		var empno = $('#empno').val();
 		var ename = $('#ename').val();
@@ -86,84 +85,86 @@ tr:nth-child(even) {
 		var sal = $('#sal').val();
 		
 		var jsonData = {
-				"empno" : empno,
-				"ename" : ename,
-				"job" : job,
-				"sal" : sal
+			"empno" : empno,
+			"ename" : ename,
+			"job" : job,
+			"sal" : sal
 		};
 		
-        //AJAX 호출!
-        $.ajax({
+		$.ajax({
         	url: '/api/v1/emp/join',
-           	type: "POST",
-           	contentType: 'application/json', // 서버에 json 타입으로 보낼 예정(요청)
-           	data: JSON.stringify(jsonData),
-           	dataType: 'json',
-           	success: function (response){
-           		console.log(response);
-           		alert('사원 추가 완료!');
-           		location.reload(); //새로고침
-           	}
+        	type: 'POST',
+        	contentType: 'application/json', //서버에 json 타입으로 보낼 예정(요청)
+        	data : JSON.stringify(jsonData),
+        	dataType: 'json',
+ 	        success: function (response) {
+ 	        	console.log(response);
+ 	        	alert('사원 추가 완료!');
+ 	        	location.reload(); //새로고침
+ 	        }
+        });
+	}
+	
+	
+	function doDelete(){
+		//문제 사원번호가 9999 넘으면 '잘못된 사원번호 입니다.' 라는 alert창 보여주기! 
+		// 제이쿼리 :  $('#d_empno').val();
+		// 바닐라 스크립트 : document.getElementById('d_empno').value;
+		var empno = $('#d_empno').val(); //input 데이터 가져오기
+		if(empno == ''){
+			alert('사원번호를 입력해주세요.');
+			$('#d_empno').focus();
+			return false;
+		}
+		if(empno > 9999){
+			alert('사원번호는 9999이하로 작성해주세요.');
+			$('#d_empno').focus();
+			$('#d_empno').val('');
+			return false;
+		}
+		
+		//사원 삭제 ajax 연결하기
+		$.ajax({
+			url: '/api/v1/emp/'+empno,
+        	type: 'DELETE',
+        	dataType: 'json',
+ 	        success: function (response) {
+ 	        	alert('사원 삭제 완료!🎃🎃');
+ 	        	location.reload(); //새로고침
+ 	        }	
 		});
 	}
-
-
-
-
-     function callMyAPI(){
-        //ajax : 백엔드와 프론트가 통신하는 기능!
-        //type : GET == Controller에 GetMapping
-        $.ajax({
-           url:'/api/v1/emp',
-           type:'GET',
-           dataType : 'json',
-           success : function (data){
-              if(data.length>0)
-              	for(var i in data){
-              		tr = $('<tr></tr>');
-              		 
-              		empno = $('<td>'+data[i].empno+'</td>');
-              		ename = $('<td>'+data[i].ename+'</td>');
-              		job = $('<td>'+data[i].job+'</td>');
-              		sal = $('<td>'+data[i].sal+'</td>');
-              		hiredate = $('<td>'+data[i].hiredate+'</td>');
-              		
-              		tr.append(empno);
-              		tr.append(ename);
-              		tr.append(job);
-              		tr.append(sal);
-              		tr.append(hiredate);
-              		
-              		$("#emp").append(tr);
-              }
-           }
-        });   
-     }
-     callMyAPI();// 함수호출
-         
- 	/* 쌤 답안
-  	callApi();
- 	function callApi(){
- 		$.ajax({
- 	           url:'/api/v1/emp',
- 	           type:'GET',
- 	           dataType : 'json',
- 	           success : function (response){
- 	        	   var html = '';
- 	        	   for(var i=0; i <response.length; i++){
- 	        		   html += '<tr><td>' + response[i].empno+'</td><td>'
- 	        		   + response[i].ename+'</td><td>'+response[i].job
- 	        		   +'</td><td>'+response[i].sal+'</td><td>'
- 	        		   + response[i].hiredate+'</td></tr>'
- 	        	   }
- 	        	   $("#data").append(html);
- 	          	}
- 	      }
- 	}
-  	*/
-
-
-
-     </script>
-
+	
+	//UPDATE == INSERT
+	function doUpdate(){
+		var empno = $('#u_empno').val();
+		var sal = $('#u_sal').val();
+		var job =$('#u_job').val();
+		
+		var jsonData = {
+			"empno" : empno,
+			"job" : job,
+			"sal" : sal
+		};
+			
+			$.ajax({
+	        	url: '/api/v1/emp',
+	        	type: 'PATCH',
+	        	contentType: 'application/json', //서버에 json 타입으로 보낼 예정(요청)
+	        	data : JSON.stringify(jsonData),
+	        	dataType: 'json',
+	 	        success: function (response) {
+	 	        	alert('사원 수정 완료!');
+	 	        	location.reload(); //새로고침
+	 	        }
+	        });
+	}
+	
+	
+	
+	
+	
+	
+	
+</script>
 </html>
