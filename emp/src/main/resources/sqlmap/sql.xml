@@ -2,7 +2,66 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dw.emp.mapper.EmpMapper">
 	<select id="selectEmp" resultType="com.dw.emp.vo.EmpVO">
-		SELECT e.empno, e.ename, e.job, e.hiredate, e.sal, d.dname, d.loc FROM emp AS e INNER JOIN dept AS d ON e.deptno = d.deptno
+		SELECT 
+			e.empno, 
+			e.ename, 
+			e.job, 
+			e.hiredate, 
+			e.sal, 
+			d.dname, 
+			d.loc 
+		FROM emp AS e 
+		INNER JOIN dept AS d 
+		ON e.deptno = d.deptno
 	</select>
+	
+	<!-- 사원목록 구현하기 -->
+	<select id="selectEmpfindByEmpno" resultType="com.dw.emp.vo.EmpVO">
+		SELECT 
+			ename,
+			ifnull(sal, 100) AS sal,
+			ifnull(comm, 0) AS comm
+		FROM emp
+		WHERE empno = #{empno}
+	</select>
+	
+	<!-- 사원 추가 -->
+	<insert id="insertEmp">
+		INSERT INTO emp
+		(
+			empno,
+			ename,
+			job,
+			hiredate,
+			sal,
+			deptno
+		)
+				VALUES
+		(
+			#{empno},
+			#{ename},
+			#{job},
+			#{hiredate},
+			#{sal},
+			#{deptno}
+		)
+	</insert>
+	
+	<!-- 사원 삭제 -->
+	<delete id="deleteEmp">
+		DELETE FROM emp
+		WHERE empno = #{empno}
+	</delete>
+	
+	<!-- 사원 수정 -->
+	<update id="updateEmp">
+		UPDATE emp
+		SET 
+			sal = #{sal},
+			job = #{job}
+		WHERE empno = #{empno}
+	</update>
+	
+	
 	
 </mapper>

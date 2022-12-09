@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class EmpController {
 
 	@GetMapping("/emp")
-	public String callEmpPage() {
+	public String loadPage() {
 		return "emp";
 	}
 }
