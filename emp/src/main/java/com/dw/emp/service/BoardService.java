@@ -18,4 +18,11 @@ public class BoardService {
 		return boardMapper.selectBoard();
 	}
 	
+	public int insertBoard(BoardVO vo) {
+		return boardMapper.insertBoard(vo);
+	}
+	
+	public BoardVO selectBoardFindByBoardNO(int boardNO) {
+		return boardMapper.selectBoardFindByBoardNO(boardNO);
+	}
 }

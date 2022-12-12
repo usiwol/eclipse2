@@ -6,11 +6,35 @@
 		SELECT 
 			board_no,
 			title,
+			contents,
 			writer ,
-			DATE_FORMAT(create_at, "%Y-%m-%d") AS create_at,
-			board_count 
+			DATE_FORMAT(create_at, "%Y-%m-%d") AS createAt,
+			board_count AS boardCount 
 		FROM board
 	</select>
+	
+	<!-- insert, delete, update는 int로 리턴함 -->
+	<insert id="insertBoard">
+		INSERT INTO board
+		(
+			title,
+			contents,
+			writer
+		)
+		VALUES
+		(
+			#{title},
+			#{contents},
+			#{writer}
+		)
+	</insert>
 
-
+	<select id="selectBoardFindByBoardNO" resultType="com.dw.emp.vo.BoardVO">
+		SELECT
+			title,
+			contents,
+			writer
+		FROM board
+		WHERE board_no = #{board_no}
+	</select>
 </mapper>

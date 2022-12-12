@@ -8,11 +8,12 @@ body{
 	margin: 0;
 	padding: 0;
 	margin-top: 70px;
-	background-color: #ffd700;
+	background-color: black;
 }
 #container{
 	margin: 0 auto;
 	width: 1200px;
+	color: black;
 }
 button{
 	width: 170px;
@@ -36,6 +37,7 @@ table {
 h1{
 	text-align: center;
 	font-size: 50px;
+	color: white;
 }
 .button{
 	text-align: right;
@@ -51,7 +53,7 @@ td, th {
 th{
  	background-color:#ffe4b5
 }
-tr:nth-child(even) {
+tr{
 	background-color: #dddddd;
 }
 </style>
@@ -60,7 +62,7 @@ tr:nth-child(even) {
 	<div id="container">
 		<h1> 🌈 디엔비코드 게시판 🌈 </h1>
 		<div class="button">
-			<button type="button">게시물 작성
+			<button type="button" onclick="goPage()">게시물 작성
 		</div>
 		<div id="table_wrap">
 			<table id="board">
@@ -87,16 +89,26 @@ tr:nth-child(even) {
 		           success : function (response){
 		        	   var html = '';
 		        	   for(var i=0; i <response.length; i++){
-		        		   html += '<tr><td>' + response[i].board_no+'</td><td><a href="#">'
+		        		   html += '<tr><td>' + response[i].board_no+'</td><td onclick="detailBoard('+ response[i].board_no +')"><a href="#">'
 		        		   + response[i].title+'</a></td><td>'+response[i].writer
-		        		   +'</td><td>'+response[i].create_at+'</td><td>'
-		        		   + response[i].board_count+'</td></tr>'
+		        		   +'</td><td>'+response[i].createAt+'</td><td>'
+		        		   + response[i].boardCount+'</td></tr>'
 		        	   }
+		        	   console.log(response)
 		        	   $("#board").append(html);
 		          	}
 		      });
 	}
 	
+	
+	function goPage(){
+		location.href = '/write'; //게시물작성 주소
+	}
+	
+	function detailBoard(boardNO){//게시물 상ㅅ화면으로 이동
+		console.log(boardNO);
+		location.href = '/board/'+boardNO; //게시판 PK URL(Controller)에 전달
+	}
 
 
 </script>
