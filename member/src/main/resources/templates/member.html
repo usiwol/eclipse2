@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>멤버 목록 페이지</title>
+</head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+<body>
+	<table id="member">
+	 	<tr>
+	 		<th>아이디</th>
+	 		<th>이름</th>
+	 		<th>나이</th>
+	 	</tr>
+	</table>
+</body>
+   <script src="https://code.jquery.com/jquery-3.6.1.js"
+    integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+    crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		// 사원목록 불러오기
+		callApi();
+		function callApi(){
+			$.ajax({
+				url:'api/v1/member',
+			    type:'GET',
+			    dataType : 'json',
+			    success : function (response){
+			    	var html = '';
+			       	for(var i=0; i <response.length; i++){
+			       		html += '<tr><td>' + response[i].id+'</td><td>'
+			        		+ response[i].name+'</td><td>'
+			        		+ response[i].age+'</td></tr>'
+			       	}
+			       	$("#member").append(html);
+				}
+			});
+		}
+	</script>
+
+</html>
