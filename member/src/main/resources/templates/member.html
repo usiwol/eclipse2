@@ -21,11 +21,34 @@ tr:nth-child(even) {
 }
 </style>
 <body>
+	<!-- 멤버 상세 정보 -->
+	<h3>사원 정보 조회</h3>
+	<input class="input" id="id" type="text" disablde="disablde" placeholder="아이디">
+	<input class="input" id="name" type="text" disablde="disablde" placeholder="이름">
+	<input class="input" id="age" type="text" disablde="disablde" placeholder="나이">
+	<input class="input" id="dname" type="text" disablde="disablde" placeholder="부서이름">
+	<!-- 멤버 정보 추가 -->
+	<h3>사원 정보 추가</h3>
+	<input class="input" id="i_id" type="text" disablde="disablde" placeholder="아이디">
+	<input class="input" id="i_name" type="text" disablde="disablde" placeholder="이름">
+	<input class="input" id="i_age" type="text" disablde="disablde" placeholder="나이">
+	<button type="button" onclick="join()">멤버 추가</button>
+	<!-- 멤버 정보 수정 -->
+	<h3>사원 정보 수정</h3>
+	<input class="input" id="u_id" type="text" disablde="disablde" placeholder="아이디">
+	<input class="input" id="u_name" type="text" disablde="disablde" placeholder="이름">
+	<input class="input" id="u_age" type="text" disablde="disablde" placeholder="나이">
+	<button type="button" onclick="doUpdate()">멤버 수정</button>
+	<!-- 멤버 삭제 -->
+	<h3>사원 삭제</h3>
+	<input class="input" id="d_id" type="text" disablde="disablde" placeholder="아이디">
+	<button type="button" onclick="doDelete()">멤버 삭제</button>
 	<table id="member">
 	 	<tr>
 	 		<th>아이디</th>
 	 		<th>이름</th>
 	 		<th>나이</th>
+	 		<th>부서이름</th>
 	 	</tr>
 	</table>
 </body>
@@ -43,12 +66,97 @@ tr:nth-child(even) {
 			    success : function (response){
 			    	var html = '';
 			       	for(var i=0; i <response.length; i++){
-			       		html += '<tr><td>' + response[i].id+'</td><td>'
+			       		html += '<tr onclick="getMember('+response[i].id+')"><td>' + response[i].id+'</td><td>'
 			        		+ response[i].name+'</td><td>'
-			        		+ response[i].age+'</td></tr>'
+			        		+ response[i].age+'</td><td>'
+			        		+ response[i].dept.dname+'</td></tr>'
 			       	}
 			       	$("#member").append(html);
 				}
+			});
+		}
+		
+		//상세조회
+		function getMember(id){
+			$.ajax({
+		           url:'/api/v1/member/'+id,
+		           type:'GET',
+		           dataType : 'json',
+		           success : function (response){
+		        	   	$('#id').val(response.id);
+		        	   	$('#name').val(response.name);
+		        	   	$('#age').val(response.age);
+		        	   	$('#dname').val(response.dept.dname);
+		          	}
+		      });
+		}
+		
+		//사원 추가
+		function join(){
+			var id = $('#i_id').val();
+			var name = $('#i_name').val();
+			var age = $('#i_age').val();
+		
+			var jsonData = {
+					"id" : id,
+					"name" : name,
+					"age" : age
+			};
+			
+	        //AJAX 호출!
+	        $.ajax({
+	        	url: '/api/v1/member',
+	           	type: "POST",
+	           	contentType: 'application/json', // 서버에 json 타입으로 보낼 예정(요청)
+	           	data: JSON.stringify(jsonData),
+	           	dataType: 'json',
+	           	success: function (response){
+	           		console.log(response);
+	           		alert('멤버 추가 완료!');
+	           		location.reload(); //새로고침
+	           	}
+			});
+		}
+		
+		//수정
+		//UPDATE == INSERT
+		function doUpdate(){
+			var id = $('#u_id').val();
+			var name = $('#u_name').val();
+			var age =$('#u_age').val();
+					
+			var jsonData = {
+				"id" : id,
+				"name" : name,
+				"age" : age
+			};
+				
+				$.ajax({
+		        	url: '/api/v1/member',
+		        	type: 'PATCH',
+		        	contentType: 'application/json', //서버에 json 타입으로 보낼 예정(요청)
+		        	data : JSON.stringify(jsonData),
+		        	dataType: 'json',
+		 	        success: function (response) {
+		 	        	alert('멤버 수정 완료!');
+		 	        	location.reload(); //새로고침
+		 	        }
+		        });
+		}
+		
+	  	//멤버삭제
+		function doDelete(){
+			var id = $('#d_id').val(); //input 데이터 가져오기
+			
+			//사원 삭제 ajax 연결하기
+			$.ajax({
+				url: '/api/v1/member/'+id,
+	        	type: 'DELETE',
+	        	dataType: 'json',
+	 	        success: function (response) {
+	 	        	alert('멤버 삭제 완료!');
+	 	        	location.reload(); //새로고침
+	 	        }	
 			});
 		}
 	</script>
